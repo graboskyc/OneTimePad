@@ -1,9 +1,10 @@
 import random
+import argparse
 
 letters = "ABCDEFGHJLMNPRSTUVWXYZ"
 numbers = "23456789"
 charset = letters + numbers
-def generate_matrix():
+def genMatrix():
     n = 11
     matrix = []
     for i in range(n):
@@ -13,21 +14,28 @@ def generate_matrix():
         matrix.append(row)
     return matrix
 
-mat = generate_matrix()
-letters=list(letters)
-header = letters[:11]
-columns = letters[11:]
 
-print("\n")
-print("        ONE TIME PAD\n")
+def printMatrix(matNumber):
+    mat = genMatrix()
+    letArr=list(letters)
+    header = letArr[:11]
+    columns = letArr[11:]
+    print("\n")
+    print("      ONE TIME PAD " + letArr[matNumber] + "\n")
 
-for i in range(10):
-    printString = ""
-    if i == 0:
-        printString = "    " + " ".join(header)
-        printString = printString + "\n  +-----------------------"
-    else:
-        printString = columns[i ] + " | " + " ".join(mat[i])
-    print(printString)
+    for i in range(10):
+        printString = ""
+        if i == 0:
+            printString = "    " + " ".join(header)
+            printString = printString + "\n  +-----------------------"
+        else:
+            printString = columns[i ] + " | " + " ".join(mat[i])
+        print(printString)
 
-print("\n")
+    print("\n")
+
+parser = argparse.ArgumentParser(description='One Time Pad')
+parser.add_argument("count", type=int, help="Number of OTPs to generate, defaults to 1", nargs='?', default=1)
+args = parser.parse_args()
+for i in range(args.count):
+    printMatrix(i)
